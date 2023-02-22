@@ -16,4 +16,18 @@ class HealthControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 0, response.parsed_body["questions"]
   end
+
+  test "reports 503 with the error class when the database is unreachable" do
+    connection = ActiveRecord::Base.lease_connection
+    connection.define_singleton_method(:select_value) do |*|
+      raise ActiveRecord::ConnectionNotEstablished, "connection refused"
+    end
+
+    get health_path
+
+    assert_response :service_unavailable
+    assert_equal({ "status" => "error", "error" => "ActiveRecord::ConnectionNotEstablished" }, response.parsed_body)
+  ensure
+    connection.singleton_class.remove_method(:select_value)
+  end
 end

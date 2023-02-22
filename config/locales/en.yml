@@ -14,6 +14,7 @@ en:
       not_imported_html: "No questionnaire has been imported yet. Run <code>bin/rails quiz:import</code>."
   questions:
     empty_questionnaire: "No questionnaire has been imported yet. Run `bin/rails quiz:import`."
+    out_of_order: "Questions are answered in order, so you have been taken to the next one."
     index:
       unknown_question: "That question is not part of the questionnaire."
       step: "Question %{number} of %{total}"

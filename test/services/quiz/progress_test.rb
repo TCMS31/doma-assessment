@@ -49,6 +49,30 @@ module Quiz
       assert_equal @progress.contexts, Progress.new(round_tripped).contexts
     end
 
+    test "a run is complete only once an answer ends it" do
+      @progress.record(@q1, @q1.answers.find_by!(answer_type: "no"))
+
+      assert_not_predicate @progress, :complete?
+      assert_equal "q3", @progress.next_question_external_id
+
+      @progress.record(@q3, @q3.answers.find_by!(answer_type: "yes"))
+
+      assert_predicate @progress, :complete?
+      assert_nil @progress.next_question_external_id
+    end
+
+    test "an empty run is neither complete nor waiting on a question" do
+      assert_not_predicate @progress, :complete?
+      assert_nil @progress.next_question_external_id
+    end
+
+    test "knows which questions have been answered" do
+      @progress.record(@q1, @q1.answers.first)
+
+      assert @progress.answered?(@q1)
+      assert_not @progress.answered?(@q3)
+    end
+
     test "a session holding junk under the key is replaced rather than raising" do
       assert_nothing_raised { Progress.new({ Progress::KEY => "not an array" }) }
       assert_empty Progress.new({ Progress::KEY => nil }).steps

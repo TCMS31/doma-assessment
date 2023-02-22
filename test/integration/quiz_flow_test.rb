@@ -140,6 +140,7 @@ class QuizFlowTest < ActionDispatch::IntegrationTest
 
   test "a question page issues two queries, not one per imported row" do
     get questions_path # warm the session and the Rails caches
+    answer "q1", "yes"
 
     queries = count_queries { get questions_path(question: "q2") }
 

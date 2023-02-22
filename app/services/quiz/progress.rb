@@ -24,7 +24,8 @@ module Quiz
         "question_external_id" => question.external_id,
         "statement" => question.statement,
         "answer_type" => answer.answer_type,
-        "context" => answer.context
+        "context" => answer.context,
+        "next_question_external_id" => answer.next_question_external_id
       }
 
       index = steps.index { |s| s["question_external_id"] == question.external_id }
@@ -43,6 +44,22 @@ module Quiz
 
     def started?
       steps.any?
+    end
+
+    def answered?(question)
+      steps.any? { |step| step["question_external_id"] == question.external_id }
+    end
+
+    # The question the last answer leads to; nil before the first answer and
+    # once the run has reached an answer that ends it.
+    def next_question_external_id
+      steps.last&.fetch("next_question_external_id", nil).presence
+    end
+
+    # Only a run that reached a terminal answer has a verdict. Scoring a run
+    # that stopped half way would report "loris" after a single "no tail".
+    def complete?
+      started? && next_question_external_id.nil?
     end
 
     def reset!
