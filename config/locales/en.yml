@@ -1,9 +1,16 @@
 en:
   app:
     name: "Animal Identifier"
-    tagline: "Answer a few questions and the questionnaire narrows down which animal you are looking at."
+    kicker: "Field questionnaire"
+    tagline: "Answer a few yes-or-no questions and the questionnaire narrows down which animal you are looking at, or tells you plainly that it has no entry for what you saw."
+    skip_to_content: "Skip to content"
+    footer_html: "Questions and animals are imported from <code class=\"font-mono text-stone-700\">data.json</code>."
   homepage:
     index:
+      eyebrow: "Identify by observation"
+      heading: "Which animal is it?"
+      questionnaire: "Questionnaire"
+      outcomes: "Outcomes"
       start: "Start the questionnaire"
       questions_available:
         one: "1 question"
@@ -11,7 +18,8 @@ en:
       conclusions_available:
         one: "1 possible animal"
         other: "%{count} possible animals"
-      not_imported_html: "No questionnaire has been imported yet. Run <code>bin/rails quiz:import</code>."
+      empty_heading: "Nothing to ask yet"
+      not_imported_html: "No questionnaire has been imported. Run <code class=\"font-mono\">bin/rails quiz:import</code>."
   questions:
     empty_questionnaire: "No questionnaire has been imported yet. Run `bin/rails quiz:import`."
     out_of_order: "Questions are answered in order, so you have been taken to the next one."
@@ -29,5 +37,7 @@ en:
       explains: "accounts for %{percentage}% of your answers"
       unexplained: "Not accounted for"
       your_answers: "Your answers"
-      also_considered: "Also considered"
+      also_considered: "Every animal, ranked"
+      fits: "%{percentage}% fit"
+      accepts: "Accepts: %{contexts}"
       start_again: "Start again"

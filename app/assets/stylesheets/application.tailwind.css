@@ -9,3 +9,27 @@
     display: contents;
   }
 }
+
+@layer components {
+  /* Bars are native <progress> elements rather than divs with an inline width,
+     so the content security policy can forbid inline styles. Each engine
+     styles the track and the fill through its own pseudo-elements. */
+  .progress-track {
+    @apply appearance-none overflow-hidden rounded-full border-0 bg-stone-200;
+  }
+  .progress-track::-webkit-progress-bar {
+    @apply rounded-full bg-stone-200;
+  }
+  .progress-track::-webkit-progress-value {
+    @apply rounded-full bg-moss-500;
+  }
+  .progress-track::-moz-progress-bar {
+    @apply rounded-full bg-moss-500;
+  }
+  .progress-muted::-webkit-progress-value {
+    @apply bg-stone-400;
+  }
+  .progress-muted::-moz-progress-bar {
+    @apply bg-stone-400;
+  }
+}
