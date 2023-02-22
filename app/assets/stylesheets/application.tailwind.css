@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* button_to wraps every button in a form; `form_class: "contents"` lets the
+     buttons participate in the surrounding grid, but Safari needs the reset. */
+  form.contents {
+    display: contents;
+  }
+}

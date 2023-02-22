@@ -1,0 +1,7 @@
+$ bin/rails quiz:paths
+tail + long tail (> 2in) + nocturnal             -> inconclusive (closest: lemur)
+tail + long tail (> 2in) + diurnal               -> lemur
+tail + short tail (< 2in) + nocturnal            -> loris
+tail + short tail (< 2in) + diurnal              -> inconclusive (closest: lemur)
+no tail + nocturnal                              -> loris
+no tail + diurnal                                -> inconclusive (closest: lemur)

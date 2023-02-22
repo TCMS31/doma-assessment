@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <title><%= [yield(:title).presence, t("app.name")].compact.join(" · ") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body class="h-full bg-slate-50 text-slate-800 antialiased">
+    <div class="mx-auto flex min-h-full w-full max-w-2xl flex-col gap-8 px-6 py-12 sm:py-16">
+      <header class="flex items-baseline justify-between gap-4">
+        <%= link_to root_path, class: "group inline-flex items-baseline gap-2.5 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600" do %>
+          <span aria-hidden="true" class="text-xl">🦥</span>
+          <span class="text-base font-semibold tracking-tight text-slate-900 group-hover:text-emerald-700"><%= t("app.name") %></span>
+        <% end %>
+        <span class="text-xs uppercase tracking-widest text-slate-400">DOMA assessment</span>
+      </header>
+
+      <%= render "shared/flash" %>
+
+      <main class="flex flex-1 flex-col justify-center"><%= yield %></main>
+
+      <footer class="border-t border-slate-200 pt-6 text-xs text-slate-400">
+        Questions and conclusions are imported from <code class="text-slate-500">data.json</code>.
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
+  <h1 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+    Which animal is it?
+  </h1>
+  <p class="mt-4 max-w-prose text-base leading-relaxed text-slate-600">
+    <%= t("app.tagline") %>
+  </p>
+
+  <% if @question_count.positive? %>
+    <dl class="mt-8 grid grid-cols-2 gap-4">
+      <div class="rounded-xl bg-slate-50 px-4 py-3">
+        <dt class="text-xs uppercase tracking-wide text-slate-500">Questionnaire</dt>
+        <dd class="mt-1 text-lg font-semibold text-slate-900">
+          <%= t("homepage.index.questions_available", count: @question_count) %>
+        </dd>
+      </div>
+      <div class="rounded-xl bg-slate-50 px-4 py-3">
+        <dt class="text-xs uppercase tracking-wide text-slate-500">Outcomes</dt>
+        <dd class="mt-1 text-lg font-semibold text-slate-900">
+          <%= t("homepage.index.conclusions_available", count: @conclusion_count) %>
+        </dd>
+      </div>
+    </dl>
+
+    <%= link_to t("homepage.index.start"), questions_path,
+          class: "mt-8 inline-flex items-center justify-center rounded-xl bg-emerald-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600" %>
+  <% else %>
+    <p class="mt-8 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+      <%= t("homepage.index.not_imported_html").html_safe %>
+    </p>
+  <% end %>
+</section>
