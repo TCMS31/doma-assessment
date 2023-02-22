@@ -1,9 +1,15 @@
 $ bin/rails test
-Run options: --seed 32941
+Run options: --seed 56236
 
 # Running:
 
-.....................................................................
+...................................................................................
 
-Finished in 1.028303s, 67.1008 runs/s, 176.0182 assertions/s.
-69 runs, 181 assertions, 0 failures, 0 errors, 0 skips
+Finished in 1.775829s, 46.7387 runs/s, 153.7310 assertions/s.
+83 runs, 273 assertions, 0 failures, 0 errors, 0 skips
+
+$ bundle exec rubocop
+Inspecting 50 files
+..................................................
+
+50 files inspected, no offenses detected
