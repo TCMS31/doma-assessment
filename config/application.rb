@@ -1,16 +1,13 @@
 require_relative "boot"
 
 require "rails"
+# Only the frameworks this app uses. There are no mailers, uploads, jobs or
+# websockets, so Action Mailer, Active Storage, Active Job and Action Cable
+# are not loaded.
 require "active_model/railtie"
-require "active_job/railtie"
 require "active_record/railtie"
-require "active_storage/engine"
 require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_mailbox/engine"
-require "action_text/engine"
 require "action_view/railtie"
-require "action_cable/engine"
 require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -19,7 +16,9 @@ Bundler.require(*Rails.groups)
 
 module DomaTest
   class Application < Rails::Application
-    config.load_defaults 7.0
+    config.load_defaults 8.1
+
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Where the questionnaire is loaded from. See config/initializers/quiz.rb
     # for the registry of available source adapters.

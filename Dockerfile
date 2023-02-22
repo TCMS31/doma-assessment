@@ -1,9 +1,13 @@
 # syntax=docker/dockerfile:1
 
+# Node is only needed to bundle the JS and CSS, so it is copied from the
+# official image into the build stage rather than installed from apt.
+FROM node:22-bookworm-slim AS node
+
 # ---------- build ----------------------------------------------------------
 # Gems and the esbuild/tailwind bundles are produced here; none of the build
 # toolchain survives into the runtime image.
-FROM ruby:3.1.3-slim AS builder
+FROM ruby:3.4.12-slim AS builder
 
 ENV RAILS_ENV=production \
     BUNDLE_DEPLOYMENT=1 \
@@ -11,10 +15,12 @@ ENV RAILS_ENV=production \
     BUNDLE_PATH=/usr/local/bundle
 
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y \
-      build-essential git libpq-dev nodejs npm pkg-config && \
-    npm install --global yarn@1.22.22 && \
+    apt-get install --no-install-recommends -y build-essential git libpq-dev libyaml-dev pkg-config && \
     rm -rf /var/lib/apt/lists/*
+
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /opt/yarn-v1.22.22 /opt/yarn
+RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn
 
 WORKDIR /rails
 
@@ -28,25 +34,23 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 # Bootsnap and Sprockets both want a writable cache; precompiling here keeps
-# the runtime image read-only-friendly. SECRET_KEY_BASE is only needed so the
-# production environment will boot for the asset task.
-RUN SECRET_KEY_BASE=precompile-placeholder bundle exec rails assets:precompile && \
+# the runtime image read-only-friendly. SECRET_KEY_BASE_DUMMY lets the
+# production environment boot for the asset task without a real secret.
+RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile && \
     bundle exec bootsnap precompile app/ lib/ && \
     rm -rf node_modules tmp/cache log/*
 
 # ---------- runtime --------------------------------------------------------
-FROM ruby:3.1.3-slim AS runtime
+FROM ruby:3.4.12-slim AS runtime
 
 ENV RAILS_ENV=production \
-    RAILS_LOG_TO_STDOUT=1 \
-    RAILS_SERVE_STATIC_FILES=1 \
     BUNDLE_DEPLOYMENT=1 \
     BUNDLE_WITHOUT=development:test \
     BUNDLE_PATH=/usr/local/bundle \
     PORT=3000
 
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libpq5 postgresql-client && \
+    apt-get install --no-install-recommends -y curl libpq5 libyaml-0-2 postgresql-client && \
     rm -rf /var/lib/apt/lists/*
 
 RUN groupadd --system --gid 1000 rails && \
