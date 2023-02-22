@@ -5,7 +5,7 @@
     <p class="text-xs font-semibold uppercase tracking-[0.2em] text-moss-700">
       <%= t(".step", number: @step_number, total: @total_steps) %>
     </p>
-    <span class="font-mono text-xs text-stone-500"><%= @question.external_id %></span>
+    <span class="font-mono text-xs text-stone-600"><%= @question.external_id %></span>
   </div>
 
   <progress class="progress-track mt-3 h-1.5 w-full" max="<%= @total_steps %>" value="<%= @step_number %>"
