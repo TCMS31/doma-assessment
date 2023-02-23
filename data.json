@@ -1,0 +1,63 @@
+{
+  "questions": [
+      {
+          "id": "q1",
+          "question": "Does it have a tail",
+          "answers": {
+              "yes": {
+                  "context": "tail",
+                  "question_id": "q2"
+              },
+              "no": {
+                  "context": "no tail",
+                  "question_id": "q3"
+              }
+          }
+      },
+      {
+          "id": "q2",
+          "question": "Is it a long tail (> 2in)",
+          "answers": {
+              "yes": {
+                  "context": "long tail (> 2in)",
+                  "question_id": "q3"
+              },
+              "no": {
+                  "context": "short tail (< 2in)",
+                  "question_id": "q3"
+              }
+          }
+      },
+      {
+          "id": "q3",
+          "question": "Is it nocturnal",
+          "answers": {
+              "yes": {
+                  "context": "nocturnal"
+              },
+              "no": {
+                  "context": "diurnal"
+              }
+          }
+      }
+  ],
+  "conclusions": [
+      {
+          "conclusion": "loris",
+          "context": [
+              "tail",
+              "no tail",
+              "short tail (< 2in)",
+              "nocturnal"
+          ]
+      },
+      {
+          "conclusion": "lemur",
+          "context": [
+              "tail",
+              "long tail (> 2in)",
+              "diurnal"
+          ]
+      }
+  ]
+}

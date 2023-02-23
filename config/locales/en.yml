@@ -1,0 +1,32 @@
+en:
+  app:
+    name: "Animal Identifier"
+    tagline: "Answer a few questions and the questionnaire narrows down which animal you are looking at."
+  homepage:
+    index:
+      start: "Start the questionnaire"
+      questions_available:
+        one: "1 question"
+        other: "%{count} questions"
+      conclusions_available:
+        one: "1 possible animal"
+        other: "%{count} possible animals"
+      not_imported_html: "No questionnaire has been imported yet. Run <code>bin/rails quiz:import</code>."
+  questions:
+    empty_questionnaire: "No questionnaire has been imported yet. Run `bin/rails quiz:import`."
+    index:
+      unknown_question: "That question is not part of the questionnaire."
+      step: "Question %{number} of %{total}"
+      your_answers: "Your answers so far"
+    submit_answer:
+      unknown_answer: "That answer is not available for this question."
+    result:
+      heading: "Result"
+      conclusive: "The questionnaire identifies this as a %{name}."
+      inconclusive: "No animal in the questionnaire matches every answer."
+      closest: "Closest match"
+      explains: "accounts for %{percentage}% of your answers"
+      unexplained: "Not accounted for"
+      your_answers: "Your answers"
+      also_considered: "Also considered"
+      start_again: "Start again"
