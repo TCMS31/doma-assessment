@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+# Bring the schema up to date and load the questionnaire before serving.
+# Both are idempotent, so this is safe on every container start.
+if [ "${SKIP_DB_PREPARE}" != "1" ]; then
+  ./bin/rails db:prepare
+  ./bin/rails quiz:import
+fi
+
+exec "$@"
