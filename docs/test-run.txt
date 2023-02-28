@@ -1,0 +1,9 @@
+$ bin/rails test
+Run options: --seed 32941
+
+# Running:
+
+.....................................................................
+
+Finished in 1.028303s, 67.1008 runs/s, 176.0182 assertions/s.
+69 runs, 181 assertions, 0 failures, 0 errors, 0 skips
